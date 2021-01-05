@@ -9,17 +9,18 @@ import LoadingModal from './LoadingModal';
 //     queryString: string;
 //     queryData: {}[];
 //     queryStatistics: any;
-//     querySchema: string;
 //     queryLabel: string;
 //   }[];
-//   currentSchema: string;
-//   lists: any;
-//   loading: boolean;
 //   dbSize: string;
 // };
 
 function MainPanel() {
-  const [queries, setQueries] = useState([]);
+  const [queries, setQueries] = useState({
+    queryString: '',
+    queryData: {},
+    queryStatistics: {},
+    queryLabel: 'string',
+  });
   const [dbSize, setDBSize] = useState('');
 
   async function submitQuery(event, query: String) {
@@ -31,6 +32,15 @@ function MainPanel() {
     });
     const returnedData = await response.json();
     console.log('this is returnedData Object', returnedData);
+    console.log('this is queries before setQueries ', queries);
+    setQueries({
+      queryString: '',
+      queryData: returnedData.queryData,
+      queryStatistics: returnedData.queryStats,
+      queryLabel: returnedData.queryLabel,
+    });
+    console.log('this is queries in state AFTER setQueries ', queries);
+
     // console.log(returnedData.queryData);
     // console.log(returnedData.queryStats);
 
@@ -114,8 +124,8 @@ function MainPanel() {
   return (
     <div id="main-panel">
       <div id="main-left">
-        <History queries={queries} />
-        <Compare queries={queries} />
+        <History />
+        <Compare />
       </div>
       <Tabs submit={submitQuery} queries={queries} databaseSize={dbSize} />
     </div>

@@ -119,7 +119,7 @@ class Query extends Component<QueryProps, state> {
           /> */}
         </div>
         <h3>Query</h3>
-        <form onSubmit={(e) => this.props.submit(e, this.state.queryString)}>
+        <form onSubmit={(e) => this.props.submit(e, this.state)}>
           <div className="query-label">
             <div id="chart-option">
               <span>track on chart:</span>
