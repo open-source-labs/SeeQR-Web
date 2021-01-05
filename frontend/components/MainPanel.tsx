@@ -19,19 +19,21 @@ import LoadingModal from './LoadingModal';
 // };
 
 function MainPanel() {
-  const [ queries, setQueries ] = useState([]);
-  const [ dbSize, setDBSize ] = useState('');
-  
+  const [queries, setQueries] = useState([]);
+  const [dbSize, setDBSize] = useState('');
+
   async function submitQuery(event, query: String) {
     event.preventDefault();
     const response = await fetch('/query/execute-query-tracked', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({queryString: query}),
+      body: JSON.stringify({ queryString: query }),
     });
     const returnedData = await response.json();
-    console.log(returnedData.queryData);
-    console.log(returnedData.queryStats);
+    console.log('this is returnedData Object', returnedData);
+    // console.log(returnedData.queryData);
+    // console.log(returnedData.queryStats);
+
     // const {
     //   queryStats,
     //   queryData
@@ -115,11 +117,7 @@ function MainPanel() {
         <History queries={queries} />
         <Compare queries={queries} />
       </div>
-      <Tabs
-        submit={submitQuery}
-        queries={queries}
-        databaseSize={dbSize}
-      />
+      <Tabs submit={submitQuery} queries={queries} databaseSize={dbSize} />
     </div>
   );
 }
