@@ -23,11 +23,11 @@ const dbController = {
       );
       const data = await response.json();
       const { id, connectStr } = data;
-      const expiry = 20000;
+      const expiry = 1800000; //30 minutes
       users[id] = new Pool({ connectionString: connectStr });
       res.cookie('session_id', id, { maxAge: expiry });
 
-      setTimeout(() => deleteDB(id), expiry); //20 minutes
+      setTimeout(() => deleteDB(id), expiry); 
     } else {
       const response = await fetch(
         `${url}/${req.cookies.session_id}`,
