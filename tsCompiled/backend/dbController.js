@@ -40,11 +40,13 @@ var fetch = require('node-fetch');
 var Pool = require('pg').Pool;
 var users = {};
 var url = 'https://customer.elephantsql.com/api/instances';
+var key = '6f319a52-93f7-4608-9441-c53c9577d410';
+var password = "Basic " + Buffer.from(":" + key).toString("base64");
 var dbnum = 0;
 var options = function (str) { return ({
     method: str,
     headers: {
-        Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+        Authorization: password,
     },
 }); };
 var deleteDB = function (id) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
@@ -60,17 +62,17 @@ var dbController = {
             switch (_a.label) {
                 case 0:
                     if (!!('session_id' in req.cookies)) return [3 /*break*/, 3];
-                    return [4 /*yield*/, fetch(url + "?name=devdatabase" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options('POST'))];
+                    return [4 /*yield*/, fetch(url + "?name=tempDB" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options('POST'))];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
                 case 2:
                     data = _a.sent();
                     id_1 = data.id, connectStr = data.connectStr;
-                    expiry = 20000;
+                    expiry = 1800000;
                     users[id_1] = new Pool({ connectionString: connectStr });
                     res.cookie('session_id', id_1, { maxAge: expiry });
-                    setTimeout(function () { return deleteDB(id_1); }, expiry); //20 minutes
+                    setTimeout(function () { return deleteDB(id_1); }, expiry);
                     return [3 /*break*/, 6];
                 case 3: return [4 /*yield*/, fetch(url + "/" + req.cookies.session_id, options('GET'))];
                 case 4:
