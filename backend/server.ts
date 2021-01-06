@@ -1,4 +1,4 @@
-import queryRouter from './routes/queryRouter';
+import queryRouter from '../tsCompiled/backend/routes/queryRouter';
 
 const express = require('express');
 const path = require('path');
