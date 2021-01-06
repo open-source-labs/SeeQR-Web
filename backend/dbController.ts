@@ -2,13 +2,14 @@ const fetch = require('node-fetch');
 const { Pool } = require('pg');
 const users = {};
 const url = 'https://customer.elephantsql.com/api/instances';
+const key = '6f319a52-93f7-4608-9441-c53c9577d410';
+const password = "Basic " + Buffer.from(":" + key).toString("base64");
 let dbnum = 0;
 
 const options = str => ({
   method: str,
   headers: {
-    Authorization:
-      'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+    Authorization: password,
   },
 })
 
