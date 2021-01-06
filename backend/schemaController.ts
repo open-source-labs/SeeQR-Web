@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('./models');
 const { exec } = require('child_process');
 
 /************************************************************

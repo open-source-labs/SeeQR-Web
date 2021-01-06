@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 var router = express.Router();
-var dbController = require('../controllers/dbController');
+var dbController = require('./dbController');
 router.get('return-db-list', dbController.returnDbList, function (req, res) {
     res.status(200).json(res.locals);
 });

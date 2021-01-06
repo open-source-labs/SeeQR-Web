@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const dbController = require('../controllers/dbController');
+const dbController = require('./dbController');
 
 router.get('return-db-list', dbController.returnDbList, (req, res) => {
   res.status(200).json(res.locals);

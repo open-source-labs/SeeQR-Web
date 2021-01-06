@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var Pool = require('pg').Pool;
-var _a = require('./DummyD/foreign_key_info'), getPrimaryKeys = _a.getPrimaryKeys, getForeignKeys = _a.getForeignKeys;
+var _a = require('./foreign_key_info'), getPrimaryKeys = _a.getPrimaryKeys, getForeignKeys = _a.getForeignKeys;
 // Initialize to a default db.
 // URI Format: postgres://username:password@hostname:port/databasename
 var PG_URI = '';

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var faker_1 = __importDefault(require("faker"));
 var channels_1 = __importDefault(require("./channels"));
-var db = require('../models');
+var db = require('./models');
 /////////////////////////////////////////////////////////////////////
 /*   THIS FILE CONTAINS THE ALGORITHMS THAT GENERATE DUMMY DATA    */
 /*                                                                 */

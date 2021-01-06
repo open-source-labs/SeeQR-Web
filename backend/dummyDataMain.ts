@@ -1,6 +1,6 @@
 import faker from 'faker';
 import execute from './channels';
-const db = require('../models');
+const db = require('./models');
 
 /////////////////////////////////////////////////////////////////////
 /*   THIS FILE CONTAINS THE ALGORITHMS THAT GENERATE DUMMY DATA    */

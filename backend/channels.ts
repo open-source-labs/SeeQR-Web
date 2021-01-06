@@ -1,7 +1,7 @@
 // Import parts of electron to use
 import { dialog, ipcMain } from 'electron';
 
-const { generateDummyData, writeCSVFile } = require('./DummyD/dummyDataMain');
+const { generateDummyData, writeCSVFile } = require('./dummyDataMain');
 const { exec } = require('child_process');
 const db = require('./models');
 

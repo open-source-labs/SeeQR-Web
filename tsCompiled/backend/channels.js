@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Import parts of electron to use
 var electron_1 = require("electron");
-var _a = require('./DummyD/dummyDataMain'), generateDummyData = _a.generateDummyData, writeCSVFile = _a.writeCSVFile;
+var _a = require('./dummyDataMain'), generateDummyData = _a.generateDummyData, writeCSVFile = _a.writeCSVFile;
 var exec = require('child_process').exec;
 var db = require('./models');
 /************************************************************
