@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var db = require('../models');
+var db = require('./models');
 var fetch = require('node-fetch');
 var Pool = require('pg').Pool;
 var queryController = {
