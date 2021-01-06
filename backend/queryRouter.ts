@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-import queryController from '../controllers/queryController';
+import queryController from './queryController';
 
 router.get(
   '/execute-query-untracked',

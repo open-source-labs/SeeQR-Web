@@ -3,12 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var queryRouter_1 = __importDefault(require("./routes/queryRouter"));
+var queryRouter_1 = __importDefault(require("./queryRouter"));
 var express = require('express');
 var path = require('path');
 // const fetch = require('node-fetch');
 var cookieParser = require('cookie-parser');
-var dbController_1 = __importDefault(require("./controllers/dbController"));
+var dbController_1 = __importDefault(require("./dbController"));
 var server = express();
 //Parsing Middleware
 server.use(express.json());

@@ -1,5 +1,5 @@
 import faker from 'faker';
-import execute from '../channels';
+import execute from './channels';
 const db = require('../models');
 
 /////////////////////////////////////////////////////////////////////

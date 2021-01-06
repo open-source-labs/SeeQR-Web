@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // const schemaController = require('../controllers/schemaController');
-import schemaController from '../controllers/schemaController';
+import schemaController from './schemaController';
 
 router.get('/skip-file-upload', schemaController.skipFileUpload, (req, res) => {
   res.status(200).json('skipped file upload');

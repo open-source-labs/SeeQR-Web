@@ -1,11 +1,11 @@
-import queryRouter from '../tsCompiled/backend/routes/queryRouter';
+import queryRouter from './queryRouter';
 
 const express = require('express');
 const path = require('path');
 // const fetch = require('node-fetch');
 const cookieParser = require('cookie-parser');
 
-import dbController from './controllers/dbController';
+import dbController from './dbController';
 
 const server = express();
 
