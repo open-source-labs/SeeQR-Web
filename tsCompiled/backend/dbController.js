@@ -37,71 +37,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fetch = require('node-fetch');
-var cookieParser = require('cookie-parser');
 var Pool = require('pg').Pool;
 var users = {};
+var url = 'https://customer.elephantsql.com/api/instances';
 var dbnum = 0;
+var options = function (str) { return ({
+    method: str,
+    headers: {
+        Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+    },
+}); };
+var deleteDB = function (id) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+    switch (_a.label) {
+        case 0: return [4 /*yield*/, fetch(url + "/" + id, options('DELETE'))];
+        case 1: return [2 /*return*/, _a.sent()];
+    }
+}); }); };
 var dbController = {
     makeDB: function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var options, response, data, id_1, url, expiry, options, response, data, url;
+        var response, data, id_1, connectStr, expiry, response, data, connectStr;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     if (!!('session_id' in req.cookies)) return [3 /*break*/, 3];
-                    options = {
-                        method: 'POST',
-                        headers: {
-                            Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-                        },
-                    };
-                    return [4 /*yield*/, fetch("https://customer.elephantsql.com/api/instances?name=db" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options)];
+                    return [4 /*yield*/, fetch(url + "?name=devdatabase" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options('POST'))];
                 case 1:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
                 case 2:
                     data = _a.sent();
-                    id_1 = data.id, url = data.url;
-                    expiry = 1200000;
-                    users[id_1] = new Pool({ connectionString: url });
+                    id_1 = data.id, connectStr = data.connectStr;
+                    expiry = 20000;
+                    users[id_1] = new Pool({ connectionString: connectStr });
                     res.cookie('session_id', id_1, { maxAge: expiry });
-                    setTimeout(function () { return dbController.deleteDB(id_1); }, expiry); //20 minutes
+                    setTimeout(function () { return deleteDB(id_1); }, expiry); //20 minutes
                     return [3 /*break*/, 6];
-                case 3:
-                    options = {
-                        method: 'GET',
-                        headers: {
-                            Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-                        },
-                    };
-                    return [4 /*yield*/, fetch("https://customer.elephantsql.com/api/instances/" + req.cookies.session_id, options)];
+                case 3: return [4 /*yield*/, fetch(url + "/" + req.cookies.session_id, options('GET'))];
                 case 4:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
                 case 5:
                     data = _a.sent();
-                    url = data.url;
-                    users[req.cookies.session_id] = new Pool({ connectionString: url });
+                    connectStr = data.connectStr;
+                    users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
                     _a.label = 6;
                 case 6:
                     next();
-                    return [2 /*return*/];
-            }
-        });
-    }); },
-    deleteDB: function (id) { return __awaiter(void 0, void 0, void 0, function () {
-        var options, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    options = {
-                        method: 'DELETE',
-                        headers: {
-                            Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-                        },
-                    };
-                    return [4 /*yield*/, fetch("https://customer.elephantsql.com/api/instances/" + id, options)];
-                case 1:
-                    response = _a.sent();
                     return [2 /*return*/];
             }
         });

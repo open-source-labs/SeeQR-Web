@@ -41,14 +41,15 @@ var History = /** @class */ (function (_super) {
         return _super.call(this, props) || this;
     }
     History.prototype.renderTableHistory = function () {
+        var _this = this;
         return this.props.queries.map(function (query, index) {
-            var queryStatistics = query.queryStatistics, querySchema = query.querySchema, queryLabel = query.queryLabel;
+            console.log('this is the props in history.tsx', _this.props);
+            var queryStatistics = query.queryStatistics, queryLabel = query.queryLabel;
             var queryPlan = queryStatistics[0]["QUERY PLAN"];
             var _a = queryPlan[0], Plan = _a.Plan, planningTime = _a["Planning Time"], executionTime = _a["Execution Time"];
             var actualRows = Plan["Actual Rows"], actualTotalTime = Plan["Actual Total Time"];
             return (react_1.default.createElement("tr", { key: index },
                 react_1.default.createElement("td", { id: "query-label" }, queryLabel),
-                react_1.default.createElement("td", { id: "schema-name" }, querySchema),
                 react_1.default.createElement("td", { id: "actual-rows" }, actualRows),
                 react_1.default.createElement("td", { id: "total-time" }, actualTotalTime)));
         });

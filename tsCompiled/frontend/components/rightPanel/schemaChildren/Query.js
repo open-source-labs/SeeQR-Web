@@ -119,12 +119,8 @@ var Query = /** @class */ (function (_super) {
             theme: 'lesser-dark',
         };
         return (react_1.default.createElement("div", { id: "query-panel" },
-            react_1.default.createElement("div", { id: "database-info" },
-                "Database Size: ",
-                this.props.dbSize),
-            react_1.default.createElement("div", { id: "delete-me" }),
             react_1.default.createElement("h3", null, "Query"),
-            react_1.default.createElement("form", { onSubmit: function (e) { return _this.props.submit(e, _this.state.queryString); } },
+            react_1.default.createElement("form", { onSubmit: function (e) { return _this.props.submit(e, _this.state); } },
                 react_1.default.createElement("div", { className: "query-label" },
                     react_1.default.createElement("div", { id: "chart-option" },
                         react_1.default.createElement("span", null, "track on chart:"),

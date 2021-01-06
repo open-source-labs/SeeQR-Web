@@ -71,24 +71,23 @@ exports.Compare = function (props) {
     };
     var dropDownList = function () {
         // for each query on the query list, make a dropdown item in the menu
-        return props.queries.map(function (query, index) { return react_1.default.createElement(Dropdown_1.default.Item, { key: index, className: "queryItem", onClick: addCompareQuery }, query.queryLabel); });
+        return props.queries.map(function (query, index) { return (react_1.default.createElement(Dropdown_1.default.Item, { key: index, className: "queryItem", onClick: addCompareQuery }, query.queryLabel)); });
     };
     // Rendering the compare table with selected queries from dropdown list
     var renderCompare = function () {
         return queryInfo.compareList.map(function (query, index) {
             // destructuring data and variables from queries on the compare list
-            var queryString = query.queryString, queryData = query.queryData, queryStatistics = query.queryStatistics, querySchema = query.querySchema, queryLabel = query.queryLabel;
+            var queryString = query.queryString, queryData = query.queryData, queryStatistics = query.queryStatistics, queryLabel = query.queryLabel;
             var queryPlan = queryStatistics[0]["QUERY PLAN"];
             var _a = queryPlan[0], Plan = _a.Plan, planningTime = _a["Planning Time"], executionTime = _a["Execution Time"];
             var scanType = Plan["Node Type"], actualRows = Plan["Actual Rows"], actualStartupTime = Plan["Actual Startup Time"], actualTotalTime = Plan["Actual Total Time"], loops = Plan["Actual Loops"];
             var runtime = (planningTime + executionTime).toFixed(3);
             // To display additional analytics, comment back in JSX elements in the return statement below.
             return (react_1.default.createElement("tr", { key: index },
-                react_1.default.createElement("td", { id: 'label' }, queryLabel),
-                react_1.default.createElement("td", { id: "schema-name" }, querySchema),
+                react_1.default.createElement("td", { id: "label" }, queryLabel),
                 react_1.default.createElement("td", { id: "actual-rows" }, actualRows),
                 react_1.default.createElement("td", { id: "runtime" }, runtime),
-                react_1.default.createElement("td", { id: 'time-al' }, actualTotalTime),
+                react_1.default.createElement("td", { id: "time-al" }, actualTotalTime),
                 react_1.default.createElement("td", null,
                     react_1.default.createElement("button", { id: queryLabel, className: "delete-query-button", onClick: deleteCompareQuery }, "X"))));
         });
@@ -107,14 +106,16 @@ exports.Compare = function (props) {
             var queryLabel = query.queryLabel, querySchema = query.querySchema, queryStatistics = query.queryStatistics;
             if (!compareDataObject[querySchema]) {
                 compareDataObject[querySchema] = (_a = {},
-                    _a[queryLabel.toString()] = queryStatistics[0]["QUERY PLAN"][0]["Execution Time"] + queryStatistics[0]["QUERY PLAN"][0]["Planning Time"],
+                    _a[queryLabel.toString()] = queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+                        queryStatistics[0]['QUERY PLAN'][0]['Planning Time'],
                     _a);
             }
             else {
-                compareDataObject[querySchema][queryLabel.toString()] = queryStatistics[0]["QUERY PLAN"][0]["Execution Time"] + queryStatistics[0]["QUERY PLAN"][0]["Planning Time"];
+                compareDataObject[querySchema][queryLabel.toString()] =
+                    queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+                        queryStatistics[0]['QUERY PLAN'][0]['Planning Time'];
             }
         }
-        ;
         // then we generate a labelData array to store all unique query labels
         var labelDataArray = [];
         for (var schema in compareDataObject) {
@@ -130,14 +131,26 @@ exports.Compare = function (props) {
             var schemaArray = [];
             for (var _c = 0, labelDataArray_1 = labelDataArray; _c < labelDataArray_1.length; _c++) {
                 var label = labelDataArray_1[_c];
-                schemaArray.push(compareDataObject[schema][label] ? compareDataObject[schema][label] : 0);
+                schemaArray.push(compareDataObject[schema][label]
+                    ? compareDataObject[schema][label]
+                    : 0);
             }
             runTimeDataArray.push((_b = {}, _b[schema] = schemaArray, _b));
         }
         // creating a list of possible colors for the graph
         var schemaColors = {
             nextColor: 0,
-            colorList: ['#006C67', '#F194B4', '#FFB100', '#FFEBC6', '#A4036F', '#048BA8', '#16DB93', '#EFEA5A', '#F29E4C']
+            colorList: [
+                '#006C67',
+                '#F194B4',
+                '#FFB100',
+                '#FFEBC6',
+                '#A4036F',
+                '#048BA8',
+                '#16DB93',
+                '#EFEA5A',
+                '#F29E4C',
+            ],
         };
         // then we generate datasets for each schema for the bar chart
         var datasets = runTimeDataArray.map(function (schemaDataObject) {
@@ -149,13 +162,13 @@ exports.Compare = function (props) {
                 backgroundColor: color,
                 borderColor: color,
                 borderWidth: 1,
-                data: schemaDataObject[schemaLabel]
+                data: schemaDataObject[schemaLabel],
             };
         });
         //then we combine the label array and the data arrays for each schema into a data object to pass to our bar graph
         return {
             labels: labelDataArray,
-            datasets: datasets
+            datasets: datasets,
         };
     };
     // -------------------------------------------------------------------------------------------------------------
@@ -178,14 +191,14 @@ exports.Compare = function (props) {
             react_1.default.createElement(react_chartjs_2_1.Bar, { data: generateDatasets(), options: {
                     title: {
                         display: true,
-                        text: 'QUERY LABEL VS RUNTIME (ms)',
-                        fontSize: 16
+                        text: 'QUERY BY RUNTIME (ms)',
+                        fontSize: 16,
                     },
                     legend: {
                         display: true,
-                        position: 'right'
+                        position: 'right',
                     },
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
                 } }))));
 };
 //# sourceMappingURL=Compare.js.map

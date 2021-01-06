@@ -68,14 +68,10 @@ var Tabs = /** @class */ (function (_super) {
         return _this;
     }
     Tabs.prototype.render = function () {
-        var _this = this;
         var _a = this.props, queries = _a.queries, databaseSize = _a.databaseSize;
         return (react_1.default.createElement("div", { className: "tabs", id: "main-right" },
             react_1.default.createElement("ol", { className: "tab-list" },
-                react_1.default.createElement("span", null,
-                    react_1.default.createElement("button", { id: "input-schema-button", onClick: function (e) {
-                            _this.showModal(e);
-                        } }, "+"))),
+                react_1.default.createElement("span", null)),
             react_1.default.createElement("div", { className: "tab-content" },
                 react_1.default.createElement(SchemaContainer_1.SchemaContainer
                 // key={index}

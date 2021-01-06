@@ -122,20 +122,20 @@ export const Compare = (props: CompareProps) => {
     // first we create an object with all of the comparelist data organized in a way that enables us to render our graph easily
     const compareDataObject: any = {};
     // then we populate that object
-    // for (const query of compareList) {
-    //   const { queryLabel, querySchema, queryStatistics } = query;
-    //   if (!compareDataObject[querySchema]) {
-    //     compareDataObject[querySchema] = {
-    //       [queryLabel.toString()]:
-    //         queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
-    //         queryStatistics[0]['QUERY PLAN'][0]['Planning Time'],
-    //     };
-    //   } else {
-    //     compareDataObject[querySchema][queryLabel.toString()] =
-    //       queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
-    //       queryStatistics[0]['QUERY PLAN'][0]['Planning Time'];
-    //   }
-    // }
+    for (const query of compareList) {
+      const { queryLabel, querySchema, queryStatistics } = query;
+      if (!compareDataObject[querySchema]) {
+        compareDataObject[querySchema] = {
+          [queryLabel.toString()]:
+            queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+            queryStatistics[0]['QUERY PLAN'][0]['Planning Time'],
+        };
+      } else {
+        compareDataObject[querySchema][queryLabel.toString()] =
+          queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+          queryStatistics[0]['QUERY PLAN'][0]['Planning Time'];
+      }
+    }
 
     // then we generate a labelData array to store all unique query labels
     const labelDataArray: any = [];
@@ -235,7 +235,7 @@ export const Compare = (props: CompareProps) => {
           options={{
             title: {
               display: true,
-              text: 'QUERY LABEL VS RUNTIME (ms)',
+              text: 'QUERY BY RUNTIME (ms)',
               fontSize: 16,
             },
             legend: {

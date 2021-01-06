@@ -64,8 +64,8 @@ var Table = /** @class */ (function (_super) {
         var items = queries[queries.length - 1].queryData;
         var keys = this.getKeys(); // actor_id, firstName, lastName, lastUpdated
         return items.map(function (row, index) {
-            return react_1.default.createElement("tr", { key: index },
-                react_1.default.createElement(RenderRow, { key: index, data: row, keys: keys }));
+            return (react_1.default.createElement("tr", { key: index },
+                react_1.default.createElement(RenderRow, { key: index, data: row, keys: keys })));
         });
     };
     Table.prototype.render = function () {

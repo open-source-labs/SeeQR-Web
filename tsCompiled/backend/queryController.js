@@ -71,8 +71,9 @@ var queryController = {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    _a = req.body, queryString = _a.queryString, queryLabel = _a.queryLabel;
-                    console.log('executeqeuery cookies', req.cookies);
+                    _a = req.body.query, queryString = _a.queryString, queryLabel = _a.queryLabel;
+                    console.log('execute query cookies', req.cookies);
+                    console.log('this is the req.body', req.body);
                     users = {};
                     options = {
                         method: 'GET',
@@ -92,13 +93,15 @@ var queryController = {
                     return [4 /*yield*/, pool.query(queryString)];
                 case 3:
                     rows = _b.sent();
-                    res.locals.queryData = rows;
+                    res.locals.queryData = rows.rows;
+                    console.log('this is the res.locals.queryData w/ rows', res.locals.queryData.rows);
                     if (!!queryString.match(/create/i)) return [3 /*break*/, 5];
                     return [4 /*yield*/, pool.query('EXPLAIN (FORMAT JSON, ANALYZE) ' + queryString)];
                 case 4:
                     queryStats = _b.sent();
                     res.locals.queryStats = queryStats.rows;
                     res.locals.queryLabel = queryLabel;
+                    console.log('this is inside making a query if db exists', res.locals.queryStats);
                     _b.label = 5;
                 case 5: 
                 // send back to client

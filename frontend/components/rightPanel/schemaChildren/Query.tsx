@@ -111,13 +111,7 @@ class Query extends Component<QueryProps, state> {
 
     return (
       <div id="query-panel">
-        <div id="database-info">Database Size: {this.props.dbSize}</div>
-        <div id="delete-me">
-          {/* <DummyDataPanel
-            tableList={this.props.tableList}
-            currentSchema={this.props.currentSchema}
-          /> */}
-        </div>
+        {/* <div id="database-info">Database Size: {this.props.dbSize}</div> */}
         <h3>Query</h3>
         <form onSubmit={(e) => this.props.submit(e, this.state)}>
           <div className="query-label">

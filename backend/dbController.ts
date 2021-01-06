@@ -1,62 +1,45 @@
 const fetch = require('node-fetch');
-const cookieParser = require('cookie-parser');
 const { Pool } = require('pg');
 const users = {};
+const url = 'https://customer.elephantsql.com/api/instances';
 let dbnum = 0;
+
+const options = str => ({
+  method: str,
+  headers: {
+    Authorization:
+      'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+  },
+})
+
+const deleteDB = async id => await fetch(`${url}/${id}`, options('DELETE'));
 
 const dbController = {
   makeDB: async (req, res, next) => {
     if (!('session_id' in req.cookies)) {
-      const options = {
-        method: 'POST',
-        headers: {
-          Authorization:
-            'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-        },
-      };
       const response = await fetch(
-        `https://customer.elephantsql.com/api/instances?name=db${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
-        options
+        `${url}?name=devdatabase${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
+        options('POST')
       );
       const data = await response.json();
-      const { id, url } = data;
-      const expiry = 1200000;
-      users[id] = new Pool({ connectionString: url });
+      const { id, connectStr } = data;
+      const expiry = 20000;
+      users[id] = new Pool({ connectionString: connectStr });
       res.cookie('session_id', id, { maxAge: expiry });
 
-      setTimeout(() => dbController.deleteDB(id), expiry); //20 minutes
+      setTimeout(() => deleteDB(id), expiry); //20 minutes
     } else {
-      const options = {
-        method: 'GET',
-        headers: {
-          Authorization:
-            'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-        },
-      };
       const response = await fetch(
-        `https://customer.elephantsql.com/api/instances/${req.cookies.session_id}`,
-        options
+        `${url}/${req.cookies.session_id}`,
+        options('GET')
       );
       const data = await response.json();
-      const { url } = data;
-      users[req.cookies.session_id] = new Pool({ connectionString: url });
+      const { connectStr } = data;
+      users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
     }
     next();
   },
 
-  deleteDB: async (id) => {
-    const options = {
-      method: 'DELETE',
-      headers: {
-        Authorization:
-          'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
-      },
-    };
-    const response = await fetch(
-      `https://customer.elephantsql.com/api/instances/${id}`,
-      options
-    );
-  },
 };
 
 export default dbController;

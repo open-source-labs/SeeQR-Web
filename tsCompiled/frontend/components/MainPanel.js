@@ -1,4 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -62,25 +75,18 @@ var react_1 = __importStar(require("react"));
 var Compare_1 = require("./leftPanel/Compare");
 var History_1 = __importDefault(require("./leftPanel/History"));
 var Tabs_1 = require("./rightPanel/Tabs");
-// type MainState = {
-//   queries: {
-//     queryString: string;
-//     queryData: {}[];
-//     queryStatistics: any;
-//     querySchema: string;
-//     queryLabel: string;
-//   }[];
-//   currentSchema: string;
-//   lists: any;
-//   loading: boolean;
-//   dbSize: string;
-// };
-function MainPanel() {
-    var _a = react_1.useState([]), queries = _a[0], setQueries = _a[1];
-    var _b = react_1.useState(''), dbSize = _b[0], setDBSize = _b[1];
-    function submitQuery(event, query) {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, returnedData;
+var MainPanel = /** @class */ (function (_super) {
+    __extends(MainPanel, _super);
+    function MainPanel(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            queries: [],
+            // currentSchema will change depending on which Schema Tab user selects
+            loading: false,
+            dbSize: '',
+        };
+        _this.submitQuery = function (event, query) { return __awaiter(_this, void 0, void 0, function () {
+            var response, returnedData, queryData, queryStats, queryLabel, newQuery, queries;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -88,84 +94,42 @@ function MainPanel() {
                         return [4 /*yield*/, fetch('/query/execute-query-tracked', {
                                 method: 'PUT',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ queryString: query }),
+                                body: JSON.stringify({ query: query }),
                             })];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.json()];
                     case 2:
                         returnedData = _a.sent();
-                        console.log('this is returnedData Object', returnedData);
+                        queryData = returnedData.queryData, queryStats = returnedData.queryStats, queryLabel = returnedData.queryLabel;
+                        newQuery = {
+                            queryString: '',
+                            queryData: queryData,
+                            queryStatistics: queryStats,
+                            queryLabel: queryLabel,
+                        };
+                        queries = this.state.queries.slice();
+                        // push new query object into copy of queries array
+                        queries.push(newQuery);
+                        this.setState({ queries: queries });
                         return [2 /*return*/];
                 }
             });
-        });
+        }); };
+        // this.onClickTabItem = this.onClickTabItem.bind(this);
+        _this.submitQuery = _this.submitQuery.bind(_this);
+        return _this;
     }
-    // componentDidMount() {
-    // ipcRenderer.send('return-db-list');
-    // Listening for returnedData from executing Query
-    // Update state with new object (containing query data, query statistics, query schema
-    // inside of state.queries array
-    // ipcRenderer.on('return-execute-query', (event: any, returnedData: any) => {
-    //   // destructure from returnedData from backend
-    //   const {
-    //     queryString,
-    //     queryData,
-    //     queryStatistics,
-    //     queryCurrentSchema,
-    //     queryLabel,
-    //   } = returnedData;
-    //   // create new query object with returnedData
-    //   const newQuery = {
-    //     queryString,
-    //     queryData,
-    //     queryStatistics,
-    //     querySchema: queryCurrentSchema,
-    //     queryLabel,
-    //   };
-    //   // create copy of current queries array
-    //   let queries = this.state.queries.slice();
-    //   // push new query object into copy of queries array
-    //   queries.push(newQuery);
-    //   this.setState({ queries });
-    // });
-    // ipcRenderer.on(
-    //   'db-lists',
-    //   (event: any, returnedLists: any, returnedDbSize: string) => {
-    //     this.setState((prevState) => ({
-    //       ...prevState,
-    //       lists: {
-    //         databaseList: returnedLists.databaseList,
-    //         tableList: returnedLists.tableList,
-    //       },
-    //       dbSize: returnedDbSize,
-    //     }));
-    //   }
-    // );
-    // ipcRenderer.on('switch-to-new', (event: any) => {
-    //   const newSchemaIndex = this.state.lists.databaseList.length - 1;
-    //   this.setState({
-    //     currentSchema: this.state.lists.databaseList[newSchemaIndex],
-    //   });
-    // });
-    // Renders the loading modal during async functions.
-    // ipcRenderer.on('async-started', (event: any) => {
-    //   this.setState({ loading: true }); // ** James/Katie - changing to false for now to avoid loading modal until we can figure out later why the async complete listener isnt kicking in
-    // });
-    // ipcRenderer.on('async-complete', (event: any) => {
-    //   this.setState({ loading: false });
-    // });
-    // }
-    // onClickTabItem(tabName) {
-    //   ipcRenderer.send('change-db', tabName);
-    //   ipcRenderer.send('return-db-list', tabName);
-    //   this.setState({ currentSchema: tabName });
-    // }
-    return (react_1.default.createElement("div", { id: "main-panel" },
-        react_1.default.createElement("div", { id: "main-left" },
-            react_1.default.createElement(History_1.default, { queries: queries }),
-            react_1.default.createElement(Compare_1.Compare, { queries: queries })),
-        react_1.default.createElement(Tabs_1.Tabs, { submit: submitQuery, queries: queries, databaseSize: dbSize })));
-}
+    MainPanel.prototype.render = function () {
+        return (react_1.default.createElement("div", { id: "main-panel" },
+            react_1.default.createElement(Tabs_1.Tabs, { queries: this.state.queries, 
+                // tableList={this.state.lists.tableList}
+                databaseSize: this.state.dbSize, submit: this.submitQuery }),
+            react_1.default.createElement("div", { id: "main-left" },
+                react_1.default.createElement(History_1.default, { queries: this.state.queries }),
+                react_1.default.createElement(Compare_1.Compare, { queries: this.state.queries }))));
+    };
+    return MainPanel;
+}(react_1.Component));
 exports.default = MainPanel;
 //# sourceMappingURL=MainPanel.js.map

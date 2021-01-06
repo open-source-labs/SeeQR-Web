@@ -21,7 +21,6 @@
   font-size: 1em;
   outline: none;
 }
-
 #splash-menu button:hover {
   background-color: #c6d2d5;
 }
@@ -29,7 +28,6 @@
 #query-panel {
   max-width: 90%;
 }
-
 #query-panel button {
   border: 0.5px #444c50 solid;
   background-color: #596368;
@@ -39,7 +37,6 @@
   font-size: 0.8em;
   outline: none;
 }
-
 #query-panel button:hover {
   background-color: #c6d2d5;
 }
@@ -51,7 +48,6 @@
   border: none;
   outline: none;
 }
-
 #main-right button:hover {
   background-color: #6cbba9;
 }
@@ -80,7 +76,6 @@ table.scroll-box {
 tbody .top-row {
   border-bottom: 1px solid #444c50;
 }
-
 tbody .top-row td {
   font-weight: bold;
 }
@@ -96,23 +91,15 @@ input {
   min-width: 20em;
   outline: none;
 }
-
 input *:focus {
   outline: none;
 }
 
 .dummy-data-select {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   padding: 1rem;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 #dummy-rows-input {
@@ -131,7 +118,6 @@ input *:focus {
   margin-right: auto;
   border: 1px solid #444c50;
 }
-
 .dummy-data-table th, .dummy-data-table tr {
   padding: 0.5rem;
   border-bottom: 1px solid #444c50;
@@ -152,19 +138,10 @@ input *:focus {
 }
 
 .query-label {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 #track {
@@ -175,18 +152,10 @@ input *:focus {
 }
 
 #chart-option {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 #data-table {
@@ -235,8 +204,7 @@ input *:focus {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0px 0px 5px grey;
-          box-shadow: inset 0px 0px 5px grey;
+  box-shadow: inset 0px 0px 5px grey;
   border-radius: 10px;
 }
 
@@ -252,3 +220,5 @@ input *:focus {
   min-width: 8rem;
   overflow-y: scroll;
 }
+
+/*# sourceMappingURL=components.css.map */
