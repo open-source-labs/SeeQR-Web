@@ -27,8 +27,9 @@ const queryController = {
 
   executeQueryTracked: async (req, res, next) => {
     // extract query string from client request
-    const { queryString, queryLabel } = req.body;
-    console.log('executeqeuery cookies', req.cookies);
+    const { queryString, queryLabel } = req.body.query;
+    console.log('execute query cookies', req.cookies);
+    console.log('this is the req.body', req.body);
     // declare a user object to hold connection string
     const users = {};
 
@@ -50,10 +51,12 @@ const queryController = {
     // match the connection pool based on cookies
     const pool = users[req.cookies['session_id']];
 
-    // retrieve query results and attach to frontend data object
     const rows = await pool.query(queryString);
-    res.locals.queryData = rows;
-
+    res.locals.queryData = rows.rows;
+    console.log(
+      'this is the res.locals.queryData w/ rows',
+      res.locals.queryData.rows
+    );
     // Run EXPLAIN (FORMAT JSON, ANALYZE)
     if (!queryString.match(/create/i)) {
       const queryStats = await pool.query(
@@ -61,6 +64,10 @@ const queryController = {
       );
       res.locals.queryStats = queryStats.rows;
       res.locals.queryLabel = queryLabel;
+      console.log(
+        'this is inside making a query if db exists',
+        res.locals.queryStats
+      );
     }
 
     // send back to client
