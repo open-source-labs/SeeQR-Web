@@ -19,7 +19,7 @@ const dbController = {
   makeDB: async (req, res, next) => {
     if (!('session_id' in req.cookies)) {
       const response = await fetch(
-        `${url}?name=devdatabase${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
+        `${url}?name=tempDB${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
         options('POST')
       );
       const data = await response.json();
