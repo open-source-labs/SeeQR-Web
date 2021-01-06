@@ -1,14 +1,7 @@
 /node_modules
-/dist
-/tsCompiled
 */.DS_Store
 .DS_Store
-dvdrental.tar
 package-lock.json
-films.csv
-people.csv
-swcopy.sql
-vessels.csv
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
