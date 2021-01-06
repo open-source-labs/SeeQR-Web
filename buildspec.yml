@@ -17,3 +17,14 @@ phases:
   build:
     commands:
       - npm run build
+artifacts:
+  files:
+    - package.json
+    - tsCompiled/backend/*
+    - tsCompiled/babel.config.js
+    - tsCompiled/babel.config.js.map
+    - tsCompiled/webpack.config.js
+    - tsCompiled/webpack.config.js.map
+    - dist/*
+    - assets/*
+    - __tests__/*
