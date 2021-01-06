@@ -10,7 +10,6 @@ type CompareProps = {
     queryString: string;
     queryData: {}[];
     queryStatistics: any;
-    querySchema: string;
     queryLabel: string;
   }[];
 };
@@ -69,13 +68,7 @@ export const Compare = (props: CompareProps) => {
   const renderCompare = () => {
     return queryInfo.compareList.map((query, index) => {
       // destructuring data and variables from queries on the compare list
-      const {
-        queryString,
-        queryData,
-        queryStatistics,
-        querySchema,
-        queryLabel,
-      } = query;
+      const { queryString, queryData, queryStatistics, queryLabel } = query;
       const { ['QUERY PLAN']: queryPlan } = queryStatistics[0];
       const {
         Plan,
@@ -95,7 +88,7 @@ export const Compare = (props: CompareProps) => {
       return (
         <tr key={index}>
           <td id="label">{queryLabel}</td>
-          <td id="schema-name">{querySchema}</td>
+          {/* <td id="schema-name">{querySchema}</td> */}
           {/* <td id="query-string">{queryString}</td> */}
           {/* <td id="scan-type">{scanType}</td> */}
           <td id="actual-rows">{actualRows}</td>
@@ -129,20 +122,20 @@ export const Compare = (props: CompareProps) => {
     // first we create an object with all of the comparelist data organized in a way that enables us to render our graph easily
     const compareDataObject: any = {};
     // then we populate that object
-    for (const query of compareList) {
-      const { queryLabel, querySchema, queryStatistics } = query;
-      if (!compareDataObject[querySchema]) {
-        compareDataObject[querySchema] = {
-          [queryLabel.toString()]:
-            queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
-            queryStatistics[0]['QUERY PLAN'][0]['Planning Time'],
-        };
-      } else {
-        compareDataObject[querySchema][queryLabel.toString()] =
-          queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
-          queryStatistics[0]['QUERY PLAN'][0]['Planning Time'];
-      }
-    }
+    // for (const query of compareList) {
+    //   const { queryLabel, querySchema, queryStatistics } = query;
+    //   if (!compareDataObject[querySchema]) {
+    //     compareDataObject[querySchema] = {
+    //       [queryLabel.toString()]:
+    //         queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+    //         queryStatistics[0]['QUERY PLAN'][0]['Planning Time'],
+    //     };
+    //   } else {
+    //     compareDataObject[querySchema][queryLabel.toString()] =
+    //       queryStatistics[0]['QUERY PLAN'][0]['Execution Time'] +
+    //       queryStatistics[0]['QUERY PLAN'][0]['Planning Time'];
+    //   }
+    // }
 
     // then we generate a labelData array to store all unique query labels
     const labelDataArray: any = [];

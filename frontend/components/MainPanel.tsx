@@ -8,7 +8,6 @@ type MainState = {
     queryString: string;
     queryData: {}[];
     queryStatistics: any;
-    querySchema: string;
     queryLabel: string;
   }[];
   loading: boolean;
@@ -93,42 +92,30 @@ class MainPanel extends Component<MainProps, MainState> {
 
   submitQuery = async (event, query: String) => {
     event.preventDefault();
+    console.log('this is the queryString', query);
     const response = await fetch('/query/execute-query-tracked', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ queryString: query }),
+      body: JSON.stringify({ query }),
     });
     const returnedData = await response.json();
     console.log('this is returnedData Object', returnedData);
     console.log('this is queries before setQueries ', this.state.queries);
-    const {
-      queryString,
-      queryData,
-      queryStatistics,
-      queryCurrentSchema,
-      queryLabel,
-    } = returnedData;
+    const { queryData, queryStats, queryLabel } = returnedData;
+
     const newQuery = {
-      queryString,
-      queryData,
-      queryStatistics,
-      querySchema: queryCurrentSchema,
-      queryLabel,
+      queryString: '',
+      queryData: queryData,
+      queryStatistics: queryStats,
+      queryLabel: queryLabel,
     };
+
     // create copy of current queries array
     let queries = this.state.queries.slice();
     // push new query object into copy of queries array
     queries.push(newQuery);
     this.setState({ queries });
 
-    // this.setState({
-    //   queries: {
-    //     // queryString: 'this is a test',
-    //     queryData: newQuery.queryData,
-    //     queryStatistics: returnedData.queryStats,
-    //     queryLabel: returnedData.queryLabel,
-    //   },
-    // });
     console.log(
       'this is queries in state AFTER setQueries ',
       this.state.queries

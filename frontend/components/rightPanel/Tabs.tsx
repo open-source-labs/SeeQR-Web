@@ -49,10 +49,7 @@ export class Tabs extends Component<TabsProps> {
   };
 
   render() {
-    const {
-      queries,
-      databaseSize,
-    } = this.props;
+    const { queries, databaseSize } = this.props;
 
     return (
       <div className="tabs" id="main-right">
@@ -70,14 +67,14 @@ export class Tabs extends Component<TabsProps> {
             })}
           </span> */}
           <span>
-            <button
+            {/* <button
               id="input-schema-button"
               onClick={(e) => {
                 this.showModal(e);
               }}
             >
               +
-            </button>
+            </button> */}
           </span>
         </ol>
         {/* <SchemaModal
