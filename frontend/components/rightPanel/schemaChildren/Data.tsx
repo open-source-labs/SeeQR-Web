@@ -5,8 +5,8 @@ type DataProps = {
   queries: {
     queryString: string;
     queryData: {}[];
-    queryStatistics: any
-    querySchema: string;
+    queryStatistics: any;
+    // querySchema: string;
     queryLabel: string;
   }[];
 };
@@ -26,7 +26,6 @@ export class Data extends Component<DataProps> {
         <div id="data-table">
           {queries.length === 0 ? null : <Table queries={queries} />}
         </div>
-
       </div>
     );
   }

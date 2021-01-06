@@ -4,8 +4,8 @@ type HistoryProps = {
   queries: {
     queryString: string;
     queryData: {}[];
-    queryStatistics: any
-    querySchema: string;
+    queryStatistics: any;
+    // querySchema: string;
     queryLabel: string;
   }[];
 };
@@ -18,7 +18,8 @@ export class History extends Component<HistoryProps> {
 
   renderTableHistory() {
     return this.props.queries.map((query, index) => {
-      const { queryStatistics, querySchema, queryLabel } = query;
+      console.log('this is the props in history.tsx', this.props);
+      const { queryStatistics, queryLabel } = query;
 
       const { ['QUERY PLAN']: queryPlan } = queryStatistics[0];
 
@@ -27,12 +28,15 @@ export class History extends Component<HistoryProps> {
         ['Planning Time']: planningTime,
         ['Execution Time']: executionTime,
       } = queryPlan[0];
-      const { ['Actual Rows']: actualRows, ['Actual Total Time']: actualTotalTime } = Plan;
+      const {
+        ['Actual Rows']: actualRows,
+        ['Actual Total Time']: actualTotalTime,
+      } = Plan;
 
       return (
         <tr key={index}>
           <td id="query-label">{queryLabel}</td>
-          <td id="schema-name">{querySchema}</td>
+          {/* <td id="schema-name">{querySchema}</td> */}
           <td id="actual-rows">{actualRows}</td>
           <td id="total-time">{actualTotalTime}</td>
         </tr>
