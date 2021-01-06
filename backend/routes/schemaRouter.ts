@@ -5,8 +5,6 @@ const router = express.Router();
 // const schemaController = require('../controllers/schemaController');
 import schemaController from '../controllers/schemaController';
 
-console.log(schemaController.skipFileUpload);
-
 router.get('/skip-file-upload', schemaController.skipFileUpload, (req, res) => {
   res.status(200).json('skipped file upload');
 });

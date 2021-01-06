@@ -4,10 +4,8 @@ const { Pool } = require('pg');
 const users = {};
 let dbnum = 0;
 
-console.log('inside DBCONTROLLER');
 const dbController = {
   makeDB: async (req, res, next) => {
-    console.log('inside makeDB');
     if (!('session_id' in req.cookies)) {
       const options = {
         method: 'POST',
@@ -25,10 +23,6 @@ const dbController = {
       const expiry = 1200000;
       users[id] = new Pool({ connectionString: url });
       res.cookie('session_id', id, { maxAge: expiry });
-      console.log(
-        'this is users in dbController file when user first opens page',
-        users
-      );
 
       setTimeout(() => dbController.deleteDB(id), expiry); //20 minutes
     } else {
@@ -46,10 +40,6 @@ const dbController = {
       const data = await response.json();
       const { url } = data;
       users[req.cookies.session_id] = new Pool({ connectionString: url });
-      console.log(
-        'this is users in dbController file when page refreshes',
-        users
-      );
     }
     next();
   },
@@ -66,7 +56,6 @@ const dbController = {
       `https://customer.elephantsql.com/api/instances/${id}`,
       options
     );
-    // console.log(response.status);
   },
 };
 
