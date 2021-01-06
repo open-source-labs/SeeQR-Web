@@ -14,9 +14,9 @@ phases:
 #  pre_build:
 #    commands:
 #      - npm run test
-  build:
-    commands:
-      - npm run build
+#  build:
+#    commands:
+#      - npm run build
 artifacts:
   files:
     - package.json
