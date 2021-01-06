@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    NODE_ENV: "production"
+
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - npm install
+  pre-build:
+    commands:
+      - npm run test
+  build:
+    commands:
+      - npm run build

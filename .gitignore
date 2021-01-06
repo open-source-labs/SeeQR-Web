@@ -10,5 +10,6 @@ people.csv
 swcopy.sql
 vessels.csv
 # Elastic Beanstalk Files
+.elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
