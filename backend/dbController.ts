@@ -40,11 +40,10 @@ const dbController = {
         users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
       }
     } catch {
-
+      next();
     }
     next();
   },
-
 };
 
 export default dbController;
