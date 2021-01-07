@@ -1,8 +1,8 @@
 const db = require('./models');
-
 const fetch = require('node-fetch');
-
 const { Pool } = require('pg');
+const key = '6f319a52-93f7-4608-9441-c53c9577d410';
+const password = "Basic " + Buffer.from(":" + key).toString("base64");
 
 const queryController = {
   executeQueryUntracked: (req, res, next) => {
@@ -28,16 +28,13 @@ const queryController = {
   executeQueryTracked: async (req, res, next) => {
     // extract query string from client request
     const { queryString, queryLabel } = req.body.query;
-    console.log('execute query cookies', req.cookies);
-    console.log('this is the req.body', req.body);
     // declare a user object to hold connection string
     const users = {};
 
     const options = {
       method: 'GET',
       headers: {
-        Authorization:
-          'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+        Authorization: password,
       },
     };
     const response = await fetch(
@@ -53,10 +50,6 @@ const queryController = {
 
     const rows = await pool.query(queryString);
     res.locals.queryData = rows.rows;
-    console.log(
-      'this is the res.locals.queryData w/ rows',
-      res.locals.queryData.rows
-    );
     // Run EXPLAIN (FORMAT JSON, ANALYZE)
     if (!queryString.match(/create/i)) {
       const queryStats = await pool.query(
@@ -64,10 +57,6 @@ const queryController = {
       );
       res.locals.queryStats = queryStats.rows;
       res.locals.queryLabel = queryLabel;
-      console.log(
-        'this is inside making a query if db exists',
-        res.locals.queryStats
-      );
     }
 
     // send back to client
