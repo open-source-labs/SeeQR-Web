@@ -117,14 +117,14 @@ To get started on contributing to this project:
 
 ## Application Architecture and Logic
 
-<b>Containerization</b><br/>
-SeeQR streamlines the process of instantiating postgres databases by leveraging Docker to containerize an image of postgres. This means instances of databases are automatically created every time new schema data is uploaded or inputted via the SeeQR GUI. Electron communicates with the instantiated database’s URI’s by taking advantage of the `'pg'` npm package.
+<b>Sandbox Environment</b><br/>
+SeeQR streamlines the process of instantiating postgres databases by leveraging elephantSQL to import a copy of your database on the web. This means instances of databases are automatically created every time new schema data is inputted via the SeeQR GUI.
 
-<b>Cross-schema Comparisons</b><br/>
-One of the key features of SeeQR is to compare the efficiency of executing user-inputted queries against different schemas. This allows customization of table scale, relationship, type, and the queries themselves within the context of each schema. This flexibility affords the user granular adjustments for testing every desired scenario. Please refer to “Interface & Functionality” for more details on execution.
+<b>Query Runtime Comparisons</b><br/>
+One of the key features of SeeQR is to compare the efficiency of executing user-inputted queries. The SeeQR web app allows for you to see and compare the runtimes for each query you've tracked.
 
-<b>Database:Schema 1:1 Architecture</b><br/>
-While it is feasible for a database to house multiple schemas, SeeQR’s default architecture for database:schema relations is 1:1. For every schema inputted, a new database is generated to hold that schema. This architecture serves the application’s central purpose: testing — by enabling the capacity to individually scale data connected to each schema, generating analytics at any user-specified conditions.
+<b>Database Architecture</b><br/>
+As of right now, the SeeQR web app allows for one database to be inputted and queried. We intend to add functionality
 
 <b>Session-based Result Caching</b><br/>
 The outcome results from each query, both retrieved data and analytics, are stored in the application’s state, which can be viewed and compared in table and visualizer formats. Note that these results’ persistence is session-based and will be cleared upon quitting the application.
