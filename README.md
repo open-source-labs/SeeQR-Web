@@ -7,8 +7,9 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-orange.svg)
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-welcome-blue.svg)
 [![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftheseeqr)](https://twitter.com/theseeqr)
-[![Github stars](https://img.shields.io/github/stars/oslabs-beta/SeeQR?style=social)](https://github.com/oslabs-beta/SeeQR)
+[![Github stars](https://img.shields.io/github/stars/oslabs-beta/SeeQR?style=social)](https://github.com/oslabs-beta/SeeQR_web)
 [theSeeQR.io](http://www.theseeqr.io)
+[theSeeQRweb.io](http://theseeqrweb.io/)
 
 <p><b>SeeQR: </b>A database analytic tool that compares the efficiency of different schemas and queries on a granular level to make better informed architectural decisions regarding SQL databases at various scales.</p>
 
@@ -20,16 +21,14 @@
 - [Getting Started](#getting-started)
 - [Built With](#built-with)
 - [Interface & Features](#interface-&-features)
-  - Schema upload methods
+  - Schema import methods
   - Query input
   - Data
   - History
   - Results
   - Compare
-  - Dummy data generation
   - Visualized Analytics
 - [Application Architecture and Logic](#application-architecture-and-logic)
-- [Testing](#testing)
 - [Core Team](#core-team)
 
 ## Beta Phase
@@ -40,38 +39,39 @@ SeeQR is still in BETA. Additional features, extensions, and improvements will c
 
 To get started on contributing to this project:
 
-1. Download and Install [Docker Desktop](https://www.docker.com/get-started)
-2. Fork or clone this repository
-3. Npm install
+1. Fork or clone this repository
+2. Npm install
    1. Run `npm install` for application-specific dependencies.
-   2. Run global install for: `'cross-env'`, `'webpack'`, `'webpack-dev-server'`, `'electron'`, and `'typescript'`.
-4. Install [Live Sass Compile](https://github.com/ritwickdey/vscode-live-sass-compiler) VSCode extension (settings are configured in the .vscode file in this repo), or set up your preferred Sass compiler
-5. To run application during development
-   1. `npm run dev` to launch Electron application window and webpack-dev-server.
-   2. `npm run resetContainer` to reset the container and clear pre-existing SeeQR databases. If error “can’t find postgres-1” is encountered, it is simply an indication that the container is already pruned.
+   2. Run global install for: `'typescript'`.
+3. Install [Live Sass Compile](https://github.com/ritwickdey/vscode-live-sass-compiler) VSCode extension (settings are configured in the .vscode file in this repo), or set up your preferred Sass compiler
+4. To run application during development
+   1. `npm run dev` to launch SeeQR in localhost 3000 and webpack-dev-server.
 
 ## Built With
 
-- [Electron](https://www.electronjs.org/docs)
 - [React](https://reactjs.org/)
 - [React-Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [Typescript](https://www.typescriptlang.org/)
-- [Docker](https://www.docker.com/get-started)
-- [Docker-Compose](https://docs.docker.com/compose/)
-- [PostgreSQL](https://www.postgresql.org/)
 - [Chart.js](https://github.com/chartjs)
 - [Faker.js](https://github.com/Marak/faker.js)
 - [CodeMirror](https://codemirror.net/)
+- [AWS](https://aws.amazon.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [ElephantSQL](https://www.elephantsql.com/)
 
 ## Interface & Features
+
 <div align="center">
-<img src="./frontend/assets/images/splash_page.png" width=800/><br /><br /><img src="./frontend/assets/images/interface.png" width=800/><p>The whole interface in a nutshell</p>
+<img src="./frontend/assets/images/web_app_interface.png" width=800/><p>The whole interface in a nutshell</p>
 </div>
 
-- Schema
-  - Upon application launch, upload `.sql` or `.tar` file when prompted by splash page, or hit cancel.
-  - The uploaded `.sql` or `.tar` file becomes the active database.
-  - To input new schemas, toggle the “Input Schema” button. Upload a .sql or .tar file or directly input schema code. Remember to provide the schema with a unique label, as it will be assigned to the name property of the newly spun up database connected to the schema.
+- Input Schema
+
+  - New schemas can be imported into the application by pasting the contents of your `.sql` file into the query panel on the UI of the app.
+  - Once you've imported the contents of the `.sql` file, you're ready to make queries!
+  <div align="center">
+    <img src="./frontend/assets/images/schema_input.png"/>
+  </div>
 
 - Query input
 
@@ -79,46 +79,25 @@ To get started on contributing to this project:
   - Users have option to execute a tracked or untracked query—simply check the box and provide a label to identify the query in later comparisons against other queries.
   - Toggle the submit button in the bottom left to send the query to the selected database.
   <br /><br />
-<div align="center">
-<img src="./frontend/assets/images/query_demo.gif" width=600/>
-</div>
-<br /><br />
+  <div align="center">
+  <img src="./frontend/assets/images/query_demo.gif" width=600/>
+  </div>
+  <br /><br />
 
 - Data
 
   - The data table displays data returned by the inputted query.
-<div align="center">
-<img src="./frontend/assets/images/data.png" width=600/><br /><br />
-</div>
-
-- Input Schema and Tabs
-  - New schemas can be uploaded into the application by clicking the "+" button above the main panel in the form of a ```.sql``` or a ```.tar``` file.
-  - Users can also make a copy of an existing schema, with or without data included.
-  - Newly uploaded schemas are displayed as tabs, which can be activated to run tests against during application session.
-<div align="center">
-  <img src="./frontend/assets/images/input_schema_demo.gif"/>
-</div>
-
-- Generate Dummy Data
-  - MacOS users can generate up to 500,000 rows of foreign-key compliant dummy-data
-  - Users can generate dummy data to fill in a selected scheama's tables—currently supported data types are:
-    - INT
-    - SMALLINT
-    - BIGINT
-    - VARCHAR
-  - Dummy data is foreign-key compliant.
-    - Columns with key constraints are dropped and replaced with new primary and foreign-key integer columns
-<div align="center">
-  <img src="./frontend/assets/images/dummy_data_demo.gif"/>
-</div>
+  <div align="center">
+  <img src="./frontend/assets/images/data.png" width=600/><br /><br />
+  </div>
 
 - History
 
   - The history table shows the latest queries the user submitted irrespective of the database.
   - The history table also displays the total rows returned by the query and the total query execution time.
-<div align="center">
-<img src="./frontend/assets/images/history.png" width=600/>
-</div>
+  <div align="center">
+  <img src="./frontend/assets/images/history.png" width=600/>
+  </div>
 
 - Compare
 
@@ -136,20 +115,16 @@ To get started on contributing to this project:
   - User may toggle on specific query analytics results with the Comparisons panel to compare query performances.
   - Graph will be organized on x-axis by label, and colored by schema.
 
-<div align="center">
-<img src="./frontend/assets/images/graph_demo.gif"/>
-</div>
-
 ## Application Architecture and Logic
 
-<b>Containerization</b><br/>
-SeeQR streamlines the process of instantiating postgres databases by leveraging Docker to containerize an image of postgres. This means instances of databases are automatically created every time new schema data is uploaded or inputted via the SeeQR GUI. Electron communicates with the instantiated database’s URI’s by taking advantage of the `'pg'` npm package.
+<b>Sandbox Environment</b><br/>
+SeeQR streamlines the process of instantiating postgres databases by leveraging elephantSQL to import a copy of your database on the web. This means instances of databases are automatically created every time new schema data is inputted via the SeeQR GUI.
 
-<b>Cross-schema Comparisons</b><br/>
-One of the key features of SeeQR is to compare the efficiency of executing user-inputted queries against different schemas. This allows customization of table scale, relationship, type, and the queries themselves within the context of each schema. This flexibility affords the user granular adjustments for testing every desired scenario. Please refer to “Interface & Functionality” for more details on execution.
+<b>Query Runtime Comparisons</b><br/>
+One of the key features of SeeQR is to compare the efficiency of executing user-inputted queries. The SeeQR web app allows for you to see and compare the runtimes for each query you've tracked.
 
-<b>Database:Schema 1:1 Architecture</b><br/>
-While it is feasible for a database to house multiple schemas, SeeQR’s default architecture for database:schema relations is 1:1. For every schema inputted, a new database is generated to hold that schema. This architecture serves the application’s central purpose: testing — by enabling the capacity to individually scale data connected to each schema, generating analytics at any user-specified conditions.
+<b>Database Architecture</b><br/>
+As of right now, the SeeQR web app allows for one database to be inputted and queried. We intend to add functionality for multiple schemas to be added for comparison purposes at a later time.
 
 <b>Session-based Result Caching</b><br/>
 The outcome results from each query, both retrieved data and analytics, are stored in the application’s state, which can be viewed and compared in table and visualizer formats. Note that these results’ persistence is session-based and will be cleared upon quitting the application.
@@ -196,5 +171,24 @@ The outcome results from each query, both retrieved data and analytics, are stor
 <td align="center">
 <img src="./frontend/assets/images/caseywalker.png" href="https://github.com/cwalker3011" width=180/><br/>
 <a href="https://github.com/cwalker3011">Casey Walker</a>
+</td>
+</table>
+
+<table align="center">
+<td align="center">
+<img src="./frontend/assets/images/chrisakinrinade.png" href="https://github.com/chrisakinrinade" width=180/><br/>
+<a href="https://github.com/chrisakinrinade">Chris Akinrinade</a>
+</td>
+<td align="center">
+<img src="./frontend/assets/images/jameskolotouros.png" href="https://github.com/dkolotouros" width=180/><br/>
+<a href="https://github.com/dkolotouros">James Kolotouros</a>
+</td>
+<td align="center">
+<img src="./frontend/assets/images/jennifercourtner.png" href="https://github.com/jcourtner" width=180/><br/>
+<a href="https://github.com/jcourtner">Jennifer Courtner</a>
+</td>
+<td align="center">
+<img src="./frontend/assets/images/katieklochan.png" href="https://github.com/kklochan" width=180/><br/>
+<a href="https://github.com/kklochan">Katie Klochan</a>
 </td>
 </table>
