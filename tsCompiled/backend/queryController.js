@@ -39,6 +39,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var db = require('./models');
 var fetch = require('node-fetch');
 var Pool = require('pg').Pool;
+var key = '6f319a52-93f7-4608-9441-c53c9577d410';
+var password = "Basic " + Buffer.from(":" + key).toString("base64");
 var queryController = {
     executeQueryUntracked: function (req, res, next) {
         // event.sender.send('async-started');
@@ -72,13 +74,11 @@ var queryController = {
             switch (_b.label) {
                 case 0:
                     _a = req.body.query, queryString = _a.queryString, queryLabel = _a.queryLabel;
-                    console.log('execute query cookies', req.cookies);
-                    console.log('this is the req.body', req.body);
                     users = {};
                     options = {
                         method: 'GET',
                         headers: {
-                            Authorization: 'Basic Ojg4MDVmN2U2LTBiZWUtNDcwNC04OWRlLTU5YmM2ZTJlNWEyYw==',
+                            Authorization: password,
                         },
                     };
                     return [4 /*yield*/, fetch("https://customer.elephantsql.com/api/instances/" + req.cookies.session_id, options)];
@@ -94,14 +94,12 @@ var queryController = {
                 case 3:
                     rows = _b.sent();
                     res.locals.queryData = rows.rows;
-                    console.log('this is the res.locals.queryData w/ rows', res.locals.queryData.rows);
                     if (!!queryString.match(/create/i)) return [3 /*break*/, 5];
                     return [4 /*yield*/, pool.query('EXPLAIN (FORMAT JSON, ANALYZE) ' + queryString)];
                 case 4:
                     queryStats = _b.sent();
                     res.locals.queryStats = queryStats.rows;
                     res.locals.queryLabel = queryLabel;
-                    console.log('this is inside making a query if db exists', res.locals.queryStats);
                     _b.label = 5;
                 case 5: 
                 // send back to client

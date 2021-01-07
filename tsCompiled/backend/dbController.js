@@ -65,9 +65,10 @@ var dbController = {
                     return [4 /*yield*/, fetch(url + "?name=tempDB" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options('POST'))];
                 case 1:
                     response = _a.sent();
-                    return [4 /*yield*/, response.json()];
+                    return [4 /*yield*/, response.text()];
                 case 2:
                     data = _a.sent();
+                    console.log('making new db. response: ', data);
                     id_1 = data.id, connectStr = data.connectStr;
                     expiry = 1800000;
                     users[id_1] = new Pool({ connectionString: connectStr });
@@ -77,6 +78,7 @@ var dbController = {
                 case 3: return [4 /*yield*/, fetch(url + "/" + req.cookies.session_id, options('GET'))];
                 case 4:
                     response = _a.sent();
+                    console.log('pulling up db. response: ', response);
                     return [4 /*yield*/, response.json()];
                 case 5:
                     data = _a.sent();

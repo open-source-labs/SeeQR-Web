@@ -17,26 +17,30 @@ const deleteDB = async id => await fetch(`${url}/${id}`, options('DELETE'));
 
 const dbController = {
   makeDB: async (req, res, next) => {
-    if (!('session_id' in req.cookies)) {
-      const response = await fetch(
-        `${url}?name=tempDB${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
-        options('POST')
-      );
-      const data = await response.json();
-      const { id, connectStr } = data;
-      const expiry = 1800000; //30 minutes
-      users[id] = new Pool({ connectionString: connectStr });
-      res.cookie('session_id', id, { maxAge: expiry });
+    try {
+      if (!('session_id' in req.cookies)) {
+        const response = await fetch(
+          `${url}?name=tempDB${++dbnum}9&plan=turtle&region=amazon-web-services::us-east-1`,
+          options('POST')
+          );
+        const data = await response.json();
+        const { id, connectStr } = data;
+        const expiry = 1800000; //30 minutes
+        users[id] = new Pool({ connectionString: connectStr });
+        res.cookie('session_id', id, { maxAge: expiry });
+        setTimeout(() => deleteDB(id), expiry);
+      } else {
+        const response = await fetch(
+          `${url}/${req.cookies.session_id}`,
+          options('GET')
+        );
+        console.log('pulling up db. response: ',response)
+        const data = await response.json();
+        const { connectStr } = data;
+        users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
+      }
+    } catch {
 
-      setTimeout(() => deleteDB(id), expiry); 
-    } else {
-      const response = await fetch(
-        `${url}/${req.cookies.session_id}`,
-        options('GET')
-      );
-      const data = await response.json();
-      const { connectStr } = data;
-      users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
     }
     next();
   },
