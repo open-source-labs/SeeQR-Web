@@ -57,17 +57,18 @@ var deleteDB = function (id) { return __awaiter(void 0, void 0, void 0, function
 }); }); };
 var dbController = {
     makeDB: function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var response, data, id_1, connectStr, expiry, response, data, connectStr;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var response, data, id_1, connectStr, expiry, response, data, connectStr, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
+                    _b.trys.push([0, 7, , 8]);
                     if (!!('session_id' in req.cookies)) return [3 /*break*/, 3];
                     return [4 /*yield*/, fetch(url + "?name=tempDB" + ++dbnum + "9&plan=turtle&region=amazon-web-services::us-east-1", options('POST'))];
                 case 1:
-                    response = _a.sent();
+                    response = _b.sent();
                     return [4 /*yield*/, response.json()];
                 case 2:
-                    data = _a.sent();
+                    data = _b.sent();
                     id_1 = data.id, connectStr = data.connectStr;
                     expiry = 1800000;
                     users[id_1] = new Pool({ connectionString: connectStr });
@@ -76,14 +77,20 @@ var dbController = {
                     return [3 /*break*/, 6];
                 case 3: return [4 /*yield*/, fetch(url + "/" + req.cookies.session_id, options('GET'))];
                 case 4:
-                    response = _a.sent();
+                    response = _b.sent();
+                    console.log('pulling up db. response: ', response);
                     return [4 /*yield*/, response.json()];
                 case 5:
-                    data = _a.sent();
+                    data = _b.sent();
                     connectStr = data.connectStr;
                     users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
-                    _a.label = 6;
-                case 6:
+                    _b.label = 6;
+                case 6: return [3 /*break*/, 8];
+                case 7:
+                    _a = _b.sent();
+                    next();
+                    return [3 /*break*/, 8];
+                case 8:
                     next();
                     return [2 /*return*/];
             }
