@@ -34,7 +34,6 @@ const dbController = {
           `${url}/${req.cookies.session_id}`,
           options('GET')
         );
-        console.log('pulling up db. response: ',response)
         const data = await response.json();
         const { connectStr } = data;
         users[req.cookies.session_id] = new Pool({ connectionString: connectStr });
